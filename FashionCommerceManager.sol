@@ -2,19 +2,22 @@
 pragma solidity ^0.8.18;
 
 contract ProductManager {
+    // struct product
     struct Product {
         uint256 id;
         string name;
         uint256 quantity;
         uint256 price; // in wei
     }
-
+    
+    //struct sale
     struct Sale {
         uint256 productId;
         address buyer;
         uint256 timestamp;
     }
-
+    
+    //product array by client address
     function getProductsPurchasedBy(
         Sale[] memory sales,
         Product[] memory products,
@@ -38,6 +41,7 @@ contract ProductManager {
         return purchasedProducts;
     }
 
+    //total sales in time
     function calculateSalesAmount(
         Sale[] memory sales,
         Product[] memory products,
@@ -90,7 +94,7 @@ contract FashionCommerceManager is ProductManager {
         require(product.quantity > 0, "Product out of stock");
         require(msg.value >= product.price, "Insufficient payment");
 
-        // register sale
+        // sale record
         sales.push(Sale(_productId, msg.sender, block.timestamp));
         totalSales++;
 
@@ -102,7 +106,7 @@ contract FashionCommerceManager is ProductManager {
         payable(owner).transfer(address(this).balance);
     }
 
-    // Function to retrieve a sale by ID
+    // retrieve a sale by ID
     function getSale(uint256 _saleId) public view returns (Sale memory) {
         require(_saleId < sales.length, "Sale does not exist");
         return sales[_saleId];
