@@ -1,6 +1,8 @@
 # Progetto Smart Contract con Solidity di Alessandro Ponton 
 ## Ambito Fashion
 
+### Testnet https://sepolia.etherscan.io/address/0xe2704aa2c89602ce3bb011aaccd0f6a2d08e6ce4
+
 Questo smart contract scritto in Solidity gestisce un sistema di e-commerce per la vendita di abbigliamento utilizzando Ethereum. Il contratto consente di aggiungere prodotti, tracciare le vendite e gestire gli acquisti in Ether. Lo smart contract è diviso in due sotto-contratti: `ProductManager` e `FashionCommerceManager`, dove il secondo eredita le funzionalità dal primo.
 
 ## Struttura del Contratto
@@ -42,7 +44,7 @@ Il contratto `FashionCommerceManager` estende `ProductManager` e aggiunge funzio
 
 - **addProduct**: Consente al proprietario di aggiungere un nuovo prodotto al catalogo, specificando nome, quantità e prezzo in Ether.
 - **getProduct**: Recupera i dettagli di un prodotto in base al suo ID.
-- **purchaseProduct**: Consente a un cliente di acquistare un prodotto inviando Ether. La funzione verifica la disponibilità del prodotto e la disponibilità di fondi prima di registrare la vendita.
+- **purchaseProduct**: Consente a un cliente di acquistare un prodotto inviando Ether. La funzione verifica la disponibilità del prodotto e la disponibilità di fondi prima di registrare la vendita. Una volta effettuata la vendita, aggiorna il catalogo dei prodotti.
 - **withdraw**: Consente al proprietario di ritirare il saldo di Ether dal contratto.
 - **getSale**: Recupera le informazioni su una vendita specifica in base al suo ID.
 
