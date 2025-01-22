@@ -1,73 +1,71 @@
-# Progetto Smart Contract con Solidity di Alessandro Ponton 
-## Ambito Fashion
+# Smart Contract Project with Solidity by Alessandro Ponton  
+## Fashion Domain
 
-### Testnet https://sepolia.etherscan.io/address/0xe2704aa2c89602ce3bb011aaccd0f6a2d08e6ce4
+### Testnet Deployment: https://sepolia.etherscan.io/address/0xe2704aa2c89602ce3bb011aaccd0f6a2d08e6ce4
 
-Questo smart contract scritto in Solidity gestisce un sistema di e-commerce per la vendita di abbigliamento utilizzando Ethereum. Il contratto consente di aggiungere prodotti, tracciare le vendite e gestire gli acquisti in Ether. Lo smart contract è diviso in due sotto-contratti: `ProductManager` e `FashionCommerceManager`, dove il secondo eredita le funzionalità dal primo.
+This Solidity smart contract manages an e-commerce system for selling clothing using Ethereum. The contract allows adding products, tracking sales, and handling purchases in Ether. It is divided into two subcontracts: `ProductManager` and `FashionCommerceManager`, with the latter inheriting functionalities from the former.
 
-## Struttura del Contratto
+## Contract Structure
 
-### 1. Contratto ProductManager
+### 1. `ProductManager` Contract
 
-Il contratto `ProductManager` funziona come base per la gestione di prodotti e vendite.
+The `ProductManager` contract serves as the foundation for managing products and sales.
 
-#### Struct:
+#### Structs:
 
-- **Product**: Memorizza le informazioni di un prodotto, tra cui ID, nome, quantità e prezzo in Ether.
-- **Sale**: Contiene l'ID del prodotto venduto, l'indirizzo dell'acquirente e il timestamp di una vendita.
+- **Product**: Stores product information, including ID, name, quantity, and price in Ether.
+- **Sale**: Contains the ID of the sold product, the buyer's address, and the timestamp of the sale.
 
-#### Funzioni:
+#### Functions:
 
-- **getProductsPurchasedBy**: Restituisce la lista dei prodotti acquistati da un determinato cliente.
-- **calculateSalesAmount**: Calcola l'importo totale delle vendite dato un intervallo di tempo specifico.
+- **getProductsPurchasedBy**: Returns a list of products purchased by a specific customer.
+- **calculateSalesAmount**: Calculates the total sales amount within a specified time range.
 
-### 2. Contratto FashionCommerceManager
+### 2. `FashionCommerceManager` Contract
 
-Il contratto `FashionCommerceManager` estende `ProductManager` e aggiunge funzionalità per la gestione del processo di e-commerce.
+The `FashionCommerceManager` contract extends `ProductManager` and adds functionalities for managing the e-commerce process.
 
-#### Variabili di Stato:
+#### State Variables:
 
-- **owner**: L'indirizzo del proprietario del contratto.
-- **products**: Un array che memorizza tutti i prodotti disponibili.
-- **sales**: Un array che memorizza tutte le vendite effettuate.
-- **totalSales**: Un contatore per il numero totale di vendite registrate.
+- **owner**: The address of the contract owner.
+- **products**: An array storing all available products.
+- **sales**: An array storing all completed sales.
+- **totalSales**: A counter for the total number of recorded sales.
 
-#### Eventi:
+#### Events:
 
-- **SaleRecorded**: Emette un evento ogni volta che una nuova vendita viene registrata all'array delle vendite. Contiene l'ID della vendita, l'ID del prodotto, l'indirizzo dell'acquirente e il timestamp.
+- **SaleRecorded**: Emits an event whenever a new sale is added to the sales array. Includes the sale ID, product ID, buyer's address, and timestamp.
 
-#### Modificatori:
+#### Modifiers:
 
-- **onlyOwner**: Permette l'accesso a determinate funzioni solo al proprietario del contratto.
+- **onlyOwner**: Restricts access to certain functions to the contract owner.
 
-#### Funzioni:
+#### Functions:
 
-- **addProduct**: Consente al proprietario di aggiungere un nuovo prodotto al catalogo, specificando nome, quantità e prezzo in Ether.
-- **getProduct**: Recupera i dettagli di un prodotto in base al suo ID.
-- **purchaseProduct**: Consente a un cliente di acquistare un prodotto inviando Ether. La funzione verifica la disponibilità del prodotto e la disponibilità di fondi prima di registrare la vendita. Una volta effettuata la vendita, aggiorna il catalogo dei prodotti.
-- **withdraw**: Consente al proprietario di ritirare il saldo di Ether dal contratto.
-- **getSale**: Recupera le informazioni su una vendita specifica in base al suo ID.
+- **addProduct**: Allows the owner to add a new product to the catalog, specifying name, quantity, and price in Ether.
+- **getProduct**: Retrieves product details based on its ID.
+- **purchaseProduct**: Allows customers to purchase a product by sending Ether. The function verifies product availability and sufficient funds before recording the sale. After the sale, the product catalog is updated.
+- **withdraw**: Allows the owner to withdraw the Ether balance from the contract.
+- **getSale**: Retrieves information about a specific sale based on its ID.
 
-## Come Funziona
+## How It Works
 
-1. **Aggiunta di Prodotti**: Il proprietario può aggiungere nuovi prodotti specificando nome, quantità e prezzo in Ether. Ad ogni prodotto viene assegnato un ID univoco.
-2. **Acquisto di Prodotti**: I clienti possono acquistare prodotti chiamando la funzione `purchaseProduct` e inviando la quantità necessaria di Ether. Conseguentemente, La quantità del prodotto viene ridotta e la vendita viene registrata nell'array delle vendite.
-3. **Tracciamento delle Vendite**: Il contratto tiene traccia di tutte le vendite, ed emette l'evento `SaleRecorded` per ogni vendita effettuata.
-4. **Ritirare Fondi**: Il proprietario del contratto può ritirare il saldo di Ether raccolto utilizzando la funzione `withdraw`.
+1. **Adding Products**: The owner can add new products by specifying their name, quantity, and price in Ether. Each product is assigned a unique ID.
+2. **Purchasing Products**: Customers can purchase products by calling the `purchaseProduct` function and sending the required amount of Ether. The product's quantity is reduced, and the sale is recorded in the sales array.
+3. **Tracking Sales**: The contract tracks all sales and emits the `SaleRecorded` event for each transaction.
+4. **Withdrawing Funds**: The contract owner can withdraw the collected Ether balance using the `withdraw` function.
 
-## Considerazioni sulla Sicurezza
+## Security Considerations
 
-- Il contratto utilizza istruzioni **require** per convalidare le condizioni, come il controllo della disponibilità del prodotto e di fondi sufficienti.
+- The contract uses **require** statements to validate conditions, such as checking product availability and sufficient funds.
 
-## Distribuzione
+## Deployment
 
-Per distribuire questo contratto, avrai bisogno di:
+To deploy this contract, you will need:
 
-- **Solidity Compiler**: Versione 0.8.18 o compatibile.
-- **Wallet Ethereum**: Per distribuire e interagire con il contratto su una testnet o mainnet.
+- **Solidity Compiler**: Version 0.8.18 or compatible.
+- **Ethereum Wallet**: To deploy and interact with the contract on a testnet or mainnet.
 
+## License
 
-## Licenza
-
-Licenza MIT.
-
+MIT License.
